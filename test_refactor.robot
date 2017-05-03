@@ -1,55 +1,52 @@
 ***Settings***
 Library   Selenium2Library
+Suite Setup    Open Browser    ${EMPTY}    FIREFOX
+Suite Teardown    Close All Browsers
+Test Setup    Go to Mail Login Page
+
 
 ***Variables***
-${user}    
+${valid username}    testerwsb_t1
+${valid password}    adam1234
+
+
 ***Test Cases***
-Test mail
-  Open Browser    ${EMPTY}    FIREFOX
-  Go To    http://wp.pl
-  Sleep   10
-  Click element    css=html body div#root div#application div div#header.header header._3iiJH div.qC45i div._1uXlV ul.rbY1o li a._1ZUKM
-  Input text   id=login   testerwsb_t1
-  Input text   id=password   adam1234
-  Click element    id=btnSubmit
-  Page should contain    Odebrane
+
+
 Wrong password
-  Open Browser    ${EMPTY}    FIREFOX
-  Go To    http://wp.pl
-  Sleep   10
-  Click element    css=html body div#root div#application div div#header.header header._3iiJH div.qC45i div._1uXlV ul.rbY1o li a._1ZUKM
-  Input text   id=login   testerwsb_t1
+  Input text   id=login   ${valid username}
   Input text   id=password   invalid
-  Click element    id=btnSubmit
+  Submit
   Page should not contain    Odebrane
 Wrong user
-  Open Browser    ${EMPTY}    FIREFOX
-  Go To    http://wp.pl
-  Sleep   10
-  Click element    css=html body div#root div#application div div#header.header header._3iiJH div.qC45i div._1uXlV ul.rbY1o li a._1ZUKM
   Input text   id=login   invalid
-  Input text   id=password   adam1234
-  Click element    id=btnSubmit
+  Input text   id=password   ${valid password}
+  Submit
   Page should not contain    Odebrane
 Wrong Password and user
-  Open Browser    ${EMPTY}    FIREFOX
-  Go To    http://wp.pl
-  Sleep   10
-  Click element    css=html body div#root div#application div div#header.header header._3iiJH div.qC45i div._1uXlV ul.rbY1o li a._1ZUKM
   Input text   id=login   invalid
   Input text   id=password   whatever
-  Click element    id=btnSubmit
+  Submit
   Page should not contain    Odebrane
+Correct user and password
+    Input text   id=login   ${valid username}
+    Input text   id=password   ${valid password}
+    Submit
+    Page should contain    Odebrane
+    #Sleep    5
+    #Click element    xpath=/html/body/div[4]/div/div[3]/div[2]/a
 
 ***Keywords***
-Open Browser to Mail Login Page
-  Open Browser    ${EMPTY}    FIREFOX
+
+Go to Mail Login Page
   Go To    http://wp.pl
   Sleep   10
-  Click element    css=html body div#root div#application div div#header.header header._3iiJH div.qC45i div._1uXlV ul.rbY1o li a._1ZUKM
+  Click element    css=html body div#root div#application div div#header.header header.T1pLFKY div.T140_Mc div.T2oYHDm ul.T3IPkbf li a.QsJaMZ
+Submit
+  Click element    id=btnSubmit
 
-Input User
-  Input text   id=login   ${user}
+#Input User
+  #Input text   id=login   ${user}
 
-Input password
-  Input text   id=password   ${password}
+#Input password
+  #Input text   id=password   ${password}
